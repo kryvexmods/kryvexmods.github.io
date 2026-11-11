@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Panel privado de publicación de KryvexMods.">
+  <title>Administración — KryvexMods</title>
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Navegación principal">
+      <a class="brand" href="index.html"><span class="brand-mark">K</span><span>KryvexMods</span></a>
+      <a href="index.html">Volver a la web</a>
+    </nav>
+  </header>
+  <main class="admin-main wrap">
+    <section class="page-banner"><div><h1>Panel de administración</h1><p>Publica mods gratuitos y tus fotos en las galerías de la web.</p></div></section>
+    <div id="setup-message" class="admin-message" role="status" hidden></div>
+    <p><a href="supabase-configuracion.html">Ver guía para activar Supabase y configurar el panel.</a></p>
+    <div id="auth-message" class="admin-message" role="alert" hidden></div>
+
+    <form id="login-form" class="admin-panel" hidden>
+      <h2>Iniciar sesión</h2>
+      <p>Entra con tu usuario administrador de Supabase.</p>
+      <label>Email<input name="email" type="email" autocomplete="username" required></label>
+      <label>Contraseña<input name="password" type="password" autocomplete="current-password" required></label>
+      <button class="admin-button" type="submit">Entrar</button>
+      <button id="request-password-reset" class="admin-button secondary" type="button">Crear o restablecer contraseña</button>
+    </form>
+
+    <form id="password-form" class="admin-panel" hidden>
+      <h2>Crear contraseña</h2>
+      <p>Elige una contraseña para entrar en el panel de administración.</p>
+      <label>Nueva contraseña<input name="password" type="password" autocomplete="new-password" minlength="8" required></label>
+      <label>Repite la contraseña<input name="passwordConfirmation" type="password" autocomplete="new-password" minlength="8" required></label>
+      <button class="admin-button" type="submit">Guardar contraseña</button>
+    </form>
+
+    <section id="dashboard" hidden>
+      <div class="admin-dashboard-heading">
+        <div><h2>Publicaciones</h2><p id="signed-in-user"></p></div>
+        <button id="sign-out" class="admin-button secondary" type="button">Cerrar sesión</button>
+      </div>
+      <div class="admin-forms">
+        <form id="mod-form" class="admin-panel">
+          <h2>Publicar mod gratis</h2>
+          <label>Nombre del mod<input name="title" maxlength="120" required></label>
+          <label>Descripción<textarea name="description" maxlength="1000" rows="3"></textarea></label>
+          <label>Enlace de MEGA<input name="megaUrl" type="url" placeholder="https://mega.nz/file/..." required></label>
+          <label>Imagen de portada (opcional)<input name="image" type="file" accept="image/jpeg,image/png,image/webp"></label>
+          <label class="admin-consent"><input name="rights" type="checkbox" required> Confirmo que puedo publicar este mod y sus imágenes.</label>
+          <button class="admin-button" type="submit">Publicar mod</button>
+        </form>
+        <form id="photo-form" class="admin-panel">
+          <h2>Publicar tus fotos</h2>
+          <p>Las imágenes aparecerán en Inicio, Mods, Proyectos y Últimos trabajos.</p>
+          <label>Título<input name="title" maxlength="120" required></label>
+          <label>Descripción<textarea name="description" maxlength="1000" rows="3"></textarea></label>
+          <label>Fotografía (JPG, PNG o WebP; máximo 10 MB)<input name="image" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+          <label class="admin-consent"><input name="rights" type="checkbox" required> Confirmo que tengo derecho a publicar esta fotografía.</label>
+          <button class="admin-button" type="submit">Publicar fotografía</button>
+        </form>
+      </div>
+      <div id="publish-message" class="admin-message" role="status" hidden></div>
+      <section class="admin-list">
+        <h2>Mods publicados</h2>
+        <div id="admin-mods"></div>
+      </section>
+      <section class="admin-list">
+        <h2>Fotos publicadas</h2>
+        <div id="admin-photos"></div>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap footer-row"><span>© 2026 KryvexMods.</span><a href="index.html">Volver a la web</a></div></footer>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>

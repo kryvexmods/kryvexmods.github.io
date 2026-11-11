@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurar el panel privado — KryvexMods</title>
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+  <header class="topbar"><nav class="nav wrap" aria-label="Navegación principal"><a class="brand" href="index.html"><span class="brand-mark">K</span><span>KryvexMods</span></a><a href="admin.html">Volver al panel</a></nav></header>
+  <main class="content wrap setup-guide">
+    <h1>Activar las subidas privadas</h1>
+    <p>Este sitio usa Supabase para el inicio de sesión, la base de datos y el almacenamiento público de las publicaciones. No introduzcas aquí una contraseña ni una clave secreta de Supabase.</p>
+    <ol>
+      <li>Crea un proyecto en <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer">Supabase Dashboard</a>.</li>
+      <li>En <strong>Project Settings → API</strong>, copia la URL del proyecto y la clave pública <strong>anon/publishable</strong>. Pégalas en <code>supabase-config.js</code>. Nunca publiques la clave <strong>service_role/secret</strong>.</li>
+      <li>En <strong>SQL Editor</strong>, ejecuta el contenido de <code>supabase-setup.sql</code>.</li>
+      <li>En <strong>Authentication → Users</strong>, crea tu usuario con un email tuyo. Desactiva los registros públicos en los ajustes de Authentication.</li>
+      <li>En el SQL Editor, sustituye el email del bloque final de <code>supabase-setup.sql</code> por el tuyo y ejecuta ese bloque para darte el rol <code>admin</code>. Cierra sesión y vuelve a entrar.</li>
+      <li>Sirve la web desde HTTPS (o localhost durante pruebas) y configura la URL exacta en <strong>Authentication → URL Configuration</strong>. Para esta copia local, usa <code>http://localhost:8000</code> como Site URL y añade <code>http://localhost:8000/admin.html</code> a Redirect URLs. No abras las páginas como <code>file://</code>; los módulos, el inicio de sesión y los enlaces de contraseña requieren un servidor web.</li>
+      <li>Abre <code>admin.html</code>. Desde ahí podrás publicar enlaces de MEGA e imágenes. El catálogo y las fotos que subas aparecerán automáticamente en Inicio, Mods, Proyectos y Últimos trabajos.</li>
+    </ol>
+    <p>Si el enlace de invitación caduca o no vuelve a la web, abre el panel servido por localhost, escribe tu email y pulsa <strong>Crear o restablecer contraseña</strong>. El enlace de recuperación te permitirá crear la contraseña del panel.</p>
+    <p>El panel no acepta archivos ejecutables y las imágenes tienen un límite de 10 MB. Los enlaces de descarga deben apuntar a MEGA.</p>
+  </main>
+  <footer class="footer"><div class="wrap footer-row"><span>© 2026 KryvexMods.</span><a href="admin.html">Panel de administración</a></div></footer>
+</body>
+</html>

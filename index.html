@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="KryvexMods: mods, proyectos y guías para llevar tu experiencia de GTA V al siguiente nivel.">
+  <title>KryvexMods — Mods para GTA V</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d12;
+      --panel: #11141b;
+      --panel-soft: #171b24;
+      --line: rgba(255,255,255,.09);
+      --text: #f5f6f8;
+      --muted: #9a9eaa;
+      --accent: #c9fb55;
+      --accent-dark: #9bc92e;
+      --orange: #ff8057;
+      --radius: 18px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+    body { margin: 0; color: var(--text); background: var(--bg); }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .wrap { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+    .eyebrow { color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; }
+    .section { padding: 92px 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 32px; }
+    .section-heading h2 { margin: 9px 0 0; font-size: clamp(30px, 4vw, 42px); letter-spacing: -.045em; }
+    .section-heading p { max-width: 430px; margin: 0; color: var(--muted); line-height: 1.7; font-size: 14px; }
+
+    .topbar { position: sticky; z-index: 20; top: 0; border-bottom: 1px solid var(--line); background: rgba(11,13,18,.84); backdrop-filter: blur(18px); }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 900; letter-spacing: -.055em; }
+    .brand-mark { width: 31px; height: 31px; display: grid; place-items: center; color: #0b0d12; background: var(--accent); border-radius: 9px; font-size: 15px; font-weight: 1000; transform: skew(-8deg); }
+    .brand span:last-child em { color: var(--accent); font-style: normal; }
+    .nav-links { display: flex; align-items: center; gap: 29px; color: #b8bbc4; font-size: 13px; font-weight: 600; }
+    .nav-links a:hover, .footer-links a:hover { color: var(--accent); }
+    .button { min-height: 43px; padding: 0 18px; display: inline-flex; justify-content: center; align-items: center; gap: 9px; border: 0; border-radius: 9px; background: var(--accent); color: #10130c; font-size: 12px; font-weight: 850; transition: .2s ease; cursor: pointer; }
+    .button:hover { background: #d7ff7c; transform: translateY(-2px); }
+    .button-outline { border: 1px solid var(--line); background: transparent; color: var(--text); }
+    .button-outline:hover { border-color: var(--accent); background: rgba(201,251,85,.08); }
+    .menu-toggle { display: none; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); cursor: pointer; }
+
+    .hero { position: relative; overflow: hidden; min-height: 620px; display: flex; align-items: center; border-bottom: 1px solid var(--line); background: radial-gradient(ellipse at 78% 48%, rgba(116,143,45,.13), transparent 35%), linear-gradient(125deg,#0b0d12 46%,#10140e 100%); }
+    .hero::before { content: ""; position: absolute; width: 520px; height: 520px; top: 35px; right: 3%; border: 1px solid rgba(201,251,85,.1); border-radius: 50%; box-shadow: 0 0 0 56px rgba(201,251,85,.018), 0 0 0 112px rgba(201,251,85,.018); }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1.03fr; gap: 32px; align-items: center; padding: 66px 0 78px; }
+    .hero-copy { max-width: 540px; }
+    .status { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 99px; background: rgba(255,255,255,.025); color: #d8d9de; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .status i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+    h1 { margin: 23px 0 17px; font-size: clamp(46px, 6vw, 75px); line-height: .99; letter-spacing: -.075em; }
+    h1 span { color: var(--accent); }
+    .hero-copy > p { max-width: 470px; color: #a4a8b2; font-size: 15px; line-height: 1.8; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 27px; }
+    .hero-note { display: flex; align-items: center; gap: 10px; margin-top: 32px; color: #8d929c; font-size: 11px; }
+    .avatar-stack { display: flex; padding-left: 5px; }
+    .avatar-stack span { width: 24px; height: 24px; display: grid; place-items: center; margin-left: -5px; border: 2px solid var(--bg); border-radius: 50%; background: #343a31; color: var(--accent); font-size: 8px; font-weight: 800; }
+
+    .showcase { position: relative; min-height: 380px; display: grid; place-items: center; }
+    .showcase-card { position: relative; width: min(100%, 495px); height: 355px; overflow: hidden; border: 1px solid rgba(255,255,255,.12); border-radius: 22px; background: linear-gradient(145deg,#272d29,#11151a 62%); box-shadow: 0 30px 90px rgba(0,0,0,.4); transform: rotate(2deg); }
+    .showcase-card::before { content: ""; position: absolute; width: 370px; height: 370px; top: -165px; right: -85px; border: 1px solid rgba(201,251,85,.28); border-radius: 50%; box-shadow: 0 0 0 34px rgba(201,251,85,.025), 0 0 0 68px rgba(201,251,85,.025); }
+    .showcase-label { position: absolute; z-index: 2; top: 22px; left: 22px; color: #d9ded1; font-size: 10px; font-weight: 800; letter-spacing: .16em; }
+    .showcase-label b { display: block; margin-top: 7px; color: white; font-size: 16px; letter-spacing: -.03em; }
+    .art-grid { position: absolute; inset: 30% 0 0; opacity: .21; background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px); background-size: 36px 36px; transform: perspective(350px) rotateX(56deg) scale(1.7); transform-origin: bottom; mask-image: linear-gradient(transparent,#000); }
+    .vehicle { position: absolute; z-index: 1; width: 91%; left: 5%; bottom: 60px; filter: drop-shadow(0 23px 17px rgba(0,0,0,.65)); }
+    .showcase-bottom { position: absolute; z-index: 2; right: 20px; bottom: 19px; left: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .showcase-bottom small { color: #b7b9b5; font-size: 10px; }
+    .showcase-bottom strong { display: block; margin-top: 4px; color: white; font-size: 14px; }
+    .live-tag { padding: 7px 9px; border: 1px solid rgba(201,251,85,.25); border-radius: 7px; color: var(--accent); font-size: 9px; font-weight: 800; letter-spacing: .1em; }
+    .floating-chip { position: absolute; z-index: 3; right: -7px; bottom: 42px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: #171b20; box-shadow: 0 15px 40px #0008; font-size: 11px; }
+    .floating-chip b { color: var(--accent); }
+
+    .stats { border-bottom: 1px solid var(--line); background: #0e1016; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); padding: 23px 0; }
+    .stat { padding: 5px 25px; border-left: 1px solid var(--line); }
+    .stat:first-child { padding-left: 0; border-left: 0; }
+    .stat strong { font-size: 21px; letter-spacing: -.04em; }
+    .stat span { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; }
+
+    .catalog { background: #0b0d12; }
+    .catalog-tools { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 13px; margin: 27px 0 22px; }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; }
+    .filter { min-height: 36px; padding: 0 13px; border: 1px solid var(--line); border-radius: 8px; background: transparent; color: #9da2ac; font-size: 11px; font-weight: 700; cursor: pointer; }
+    .filter:hover, .filter.active { border-color: rgba(201,251,85,.35); background: rgba(201,251,85,.08); color: var(--accent); }
+    .search { width: min(230px,100%); height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid var(--line); border-radius: 8px; color: #858a94; background: #10131a; }
+    .search input { width: 100%; border: 0; outline: 0; color: var(--text); background: transparent; font-size: 11px; }
+    .search input::placeholder { color: #777d87; }
+    .mod-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; }
+    .mod-card { overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); transition: .22s ease; }
+    .mod-card:hover { border-color: rgba(201,251,85,.32); transform: translateY(-4px); }
+    .mod-art { position: relative; height: 178px; overflow: hidden; display: grid; place-items: center; background: radial-gradient(ellipse at 50% 90%,rgba(201,251,85,.16),transparent 55%),linear-gradient(135deg,#20262a,#11151a); }
+    .mod-art::before { content: ""; position: absolute; width: 215px; height: 215px; top: -124px; right: -52px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; box-shadow: 0 0 0 28px rgba(255,255,255,.025); }
+    .mod-art.orange { background: radial-gradient(ellipse at 50% 90%,rgba(255,128,87,.18),transparent 55%),linear-gradient(135deg,#292321,#11151a); }
+    .mod-art.blue { background: radial-gradient(ellipse at 50% 90%,rgba(91,167,255,.18),transparent 55%),linear-gradient(135deg,#202630,#11151a); }
+    .mod-art.purple { background: radial-gradient(ellipse at 50% 90%,rgba(169,120,255,.17),transparent 55%),linear-gradient(135deg,#27232d,#11151a); }
+    .mod-art svg { position: relative; z-index: 1; width: 84%; filter: drop-shadow(0 14px 10px rgba(0,0,0,.65)); }
+    .badge { position: absolute; z-index: 2; top: 12px; left: 12px; padding: 6px 8px; border: 1px solid rgba(255,255,255,.13); border-radius: 6px; background: rgba(9,11,14,.63); color: #e6e8e4; font-size: 8px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .mod-info { padding: 17px; }
+    .mod-meta { display: flex; justify-content: space-between; color: #8f949e; font-size: 9px; }
+    .mod-meta span:first-child { color: var(--accent); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .mod-info h3 { margin: 11px 0 6px; font-size: 16px; letter-spacing: -.035em; }
+    .mod-info p { min-height: 36px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+    .card-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 13px; border-top: 1px solid var(--line); }
+    .version { color: #858b95; font-size: 9px; }
+    .text-link { padding: 4px 0 4px 8px; border: 0; background: transparent; color: var(--accent); font-size: 10px; font-weight: 800; cursor: pointer; }
+    .text-link:hover { color: #e0ff9a; }
+    .empty-state { display: none; grid-column: 1/-1; padding: 38px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; font-size: 13px; }
+
+    .projects { background: #10131a; }
+    .project-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 17px; }
+    .project-feature, .project-side { position: relative; min-height: 250px; overflow: hidden; padding: 27px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(135deg,#20271b,#151920 70%); }
+    .project-feature::after { content: "K"; position: absolute; right: 6%; bottom: -100px; color: rgba(201,251,85,.055); font-size: 370px; font-weight: 1000; line-height: 1; }
+    .project-side { min-height: 250px; background: linear-gradient(135deg,#23232a,#15171e); }
+    .project-side::after { content: ""; position: absolute; width: 240px; height: 240px; right: -90px; bottom: -145px; border: 1px solid rgba(255,128,87,.35); border-radius: 50%; box-shadow: 0 0 0 35px rgba(255,128,87,.04),0 0 0 70px rgba(255,128,87,.03); }
+    .project-content { position: relative; z-index: 1; max-width: 400px; }
+    .project-content h3 { margin: 15px 0 9px; font-size: 25px; letter-spacing: -.05em; }
+    .project-content p { max-width: 365px; color: #a6aab2; font-size: 12px; line-height: 1.75; }
+    .progress { width: min(270px,100%); height: 5px; overflow: hidden; margin-top: 22px; border-radius: 8px; background: rgba(255,255,255,.1); }
+    .progress i { display: block; width: 68%; height: 100%; border-radius: inherit; background: var(--accent); }
+    .progress-label { display: flex; justify-content: space-between; width: min(270px,100%); margin-top: 8px; color: #8e949d; font-size: 9px; }
+    .side-label { color: var(--orange); }
+
+    .guides-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .guide { display: flex; gap: 15px; padding: 20px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel); transition: .2s ease; }
+    .guide:hover { border-color: rgba(201,251,85,.28); transform: translateY(-3px); }
+    .guide-icon { flex: 0 0 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; background: rgba(201,251,85,.1); color: var(--accent); font-size: 17px; }
+    .guide h3 { margin: 1px 0 7px; font-size: 13px; }
+    .guide p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.65; }
+    .guide span { display: block; margin-top: 11px; color: #777e88; font-size: 9px; }
+
+    .community { padding: 0 0 90px; }
+    .community-box { position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; gap: 25px; padding: 37px 42px; border: 1px solid rgba(201,251,85,.18); border-radius: 18px; background: radial-gradient(ellipse at 90% 50%,rgba(201,251,85,.11),transparent 36%),#13171a; }
+    .community-box h2 { margin: 8px 0; font-size: 28px; letter-spacing: -.05em; }
+    .community-box p { max-width: 480px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .footer { border-top: 1px solid var(--line); background: #090b0f; }
+    .footer-main { display: flex; justify-content: space-between; gap: 35px; padding: 38px 0 28px; }
+    .footer-brand p { max-width: 260px; color: #858b95; font-size: 10px; line-height: 1.7; }
+    .footer-links { display: flex; gap: 20px; align-items: center; color: #a1a5ad; font-size: 10px; }
+    .copyright { display: flex; justify-content: space-between; gap: 15px; padding: 15px 0; border-top: 1px solid var(--line); color: #696f79; font-size: 9px; }
+
+    dialog { width: min(480px,calc(100% - 32px)); padding: 0; border: 1px solid rgba(255,255,255,.14); border-radius: 16px; background: #141820; color: var(--text); box-shadow: 0 25px 90px #000b; }
+    dialog::backdrop { background: rgba(0,0,0,.72); backdrop-filter: blur(5px); }
+    .dialog-inner { padding: 25px; }
+    .dialog-inner h2 { margin: 11px 0; font-size: 25px; letter-spacing: -.05em; }
+    .dialog-inner p { color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .dialog-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; }
+    .dialog-close { padding: 10px 0; border: 0; background: transparent; color: #a4a8b1; font-size: 11px; cursor: pointer; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 850px) {
+      .hero-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
+      .showcase-card { height: 300px; }
+      .vehicle { bottom: 53px; }
+      .mod-grid { grid-template-columns: repeat(2,1fr); }
+      .guides-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 650px) {
+      .wrap { width: min(100% - 34px,520px); }
+      .nav { min-height: 65px; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links { position: absolute; top: 64px; right: 0; left: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 17px 15px; border-bottom: 1px solid var(--line); background: #0d1016; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 13px 3px; border-bottom: 1px solid var(--line); }
+      .nav-links a:last-child { border: 0; }
+      .hero { min-height: auto; }
+      .hero-grid { grid-template-columns: 1fr; padding: 61px 0 40px; }
+      h1 { font-size: clamp(48px,13vw,68px); }
+      .hero-copy > p { font-size: 13px; }
+      .hero-note { margin-top: 23px; }
+      .showcase { min-height: 275px; margin: 6px 7px 0 0; }
+      .showcase-card { height: 254px; }
+      .showcase-card::before { width: 285px; height: 285px; }
+      .vehicle { bottom: 43px; }
+      .floating-chip { right: -8px; bottom: 25px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); gap: 18px 0; padding: 20px 0; }
+      .stat { padding-left: 15px; }
+      .stat:nth-child(odd) { padding-left: 0; border-left: 0; }
+      .section { padding: 65px 0; }
+      .section-heading { align-items: start; flex-direction: column; gap: 11px; margin-bottom: 24px; }
+      .section-heading p { font-size: 12px; }
+      .catalog-tools { align-items: stretch; flex-direction: column-reverse; }
+      .search { width: 100%; }
+      .mod-grid { gap: 11px; }
+      .mod-art { height: 130px; }
+      .mod-info { padding: 13px; }
+      .mod-info h3 { font-size: 13px; }
+      .mod-info p { min-height: 52px; font-size: 10px; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-feature,.project-side { min-height: 220px; padding: 22px; }
+      .guides-grid { grid-template-columns: 1fr; gap: 10px; }
+      .community { padding-bottom: 65px; }
+      .community-box { align-items: start; flex-direction: column; padding: 26px; }
+      .community-box h2 { font-size: 24px; }
+      .footer-main { flex-direction: column; padding-top: 29px; }
+      .footer-links { flex-wrap: wrap; }
+      .copyright { flex-direction: column; }
+    }
+    @media (max-width: 390px) {
+      .wrap { width: calc(100% - 26px); }
+      .mod-grid { grid-template-columns: 1fr; }
+      .mod-art { height: 170px; }
+      .mod-info p { min-height: 0; }
+      .filter { padding-inline: 10px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+
+    /* KryvexMods follows a classic editorial homepage layout. */
+    :root {
+      color-scheme: light;
+      --bg: #fff;
+      --panel: #fff;
+      --panel-soft: #f5f5f5;
+      --line: #e7e7e7;
+      --text: #222;
+      --muted: #666;
+      --accent: #087f75;
+      --accent-dark: #06665f;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    html { scroll-padding-top: 70px; }
+    body { color: #242424; background: #fff; }
+    .wrap { width: min(1120px, calc(100% - 40px)); }
+    .topbar { position: relative; border-bottom: 0; background: #fff; color: #171717; backdrop-filter: none; }
+    .nav { min-height: 66px; }
+    .brand { gap: 12px; color: #171717; font-size: 24px; font-weight: 700; letter-spacing: -.04em; }
+    .brand-mark { width: 28px; height: 32px; border: 2px solid #444; border-radius: 0; background: #fff; color: #333; font-size: 19px; transform: none; }
+    .brand span:last-child em { color: inherit; }
+    .nav-links { position: absolute; z-index: 10; top: 58px; right: 20px; display: none; min-width: 190px; padding: 8px 18px; border: 1px solid #ddd; background: #fff; color: #333; box-shadow: 0 8px 20px #0002; }
+    .nav-links.open { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+    .nav-links a { padding: 11px 0; border-bottom: 1px solid #eee; }
+    .nav-links a:last-child { border-bottom: 0; }
+    .nav-links a:hover, .footer-links a:hover { color: var(--accent); }
+    .nav-cta { display: none; }
+    .menu-toggle { width: auto; height: auto; display: block; padding: 8px 0 8px 12px; border: 0; border-radius: 0; background: transparent; color: #222; font-size: 15px; font-weight: 700; }
+    .menu-toggle::before { content: "Menú "; }
+    .hero { min-height: 0; overflow: hidden; border: 0; background: radial-gradient(ellipse at 82% 43%,#21435d 0,transparent 35%),radial-gradient(ellipse at 14% 30%,#183b55 0,transparent 35%),linear-gradient(180deg,#121c25,#202c35 53%,#121a20); }
+    .hero::before { width: 100%; height: 100%; inset: 0; border: 0; border-radius: 0; box-shadow: inset 0 0 0 1000px #050b1270; background: linear-gradient(110deg,transparent 33%,#2196ff38 48%,transparent 62%),linear-gradient(72deg,transparent 45%,#ed304733 55%,transparent 66%); }
+    .hero-grid { min-height: 455px; display: block; padding: 0; }
+    .hero-copy { position: relative; z-index: 3; max-width: 820px; margin: auto; padding: 127px 0 115px; text-align: center; }
+    .status, .hero-copy > .eyebrow, .hero-note { display: none; }
+    h1 { margin: 0 auto 17px; font-size: clamp(36px,5vw,58px); line-height: 1.08; letter-spacing: -.04em; text-shadow: 0 2px 8px #0007; }
+    h1 span { color: inherit; }
+    .hero-copy > p { max-width: 720px; margin: 0 auto; color: #f2f2f2; font-size: 18px; line-height: 1.55; text-shadow: 0 2px 7px #0009; }
+    .hero h1 { color: #fff; }
+    .hero-actions { justify-content: center; gap: 13px; margin-top: 25px; }
+    .button { min-height: 40px; padding: 0 17px; border-radius: 2px; background: var(--accent); color: #fff; font-size: 12px; }
+    .button:hover { background: var(--accent-dark); }
+    .button-outline { border-color: #fff; background: transparent; color: #fff; }
+    .button-outline:hover { background: #ffffff20; }
+    .showcase { position: absolute; inset: 0; min-height: 0; display: block; margin: 0; opacity: .42; }
+    .showcase-card { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: 0; background: transparent; box-shadow: none; transform: none; }
+    .showcase-card::before, .showcase-label, .art-grid, .showcase-bottom, .floating-chip { display: none; }
+    .vehicle { width: min(760px,92vw); left: 50%; bottom: -5px; opacity: .55; transform: translateX(-50%); }
+    .stats { display: none; }
+    .section { padding: 54px 0; }
+    .section-heading { display: block; margin-bottom: 22px; }
+    .section-heading .eyebrow { display: none; }
+    .section-heading h2 { margin: 0; color: #222; font-size: 30px; font-weight: 600; letter-spacing: -.025em; }
+    .section-heading p { display: none; }
+    .catalog { background: #fff; }
+    .catalog-tools { display: none; }
+    .mod-grid { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 16px; }
+    .mod-card { border: 0; border-radius: 0; background: #fff; box-shadow: none; }
+    .mod-card:hover { border-color: transparent; transform: translateY(-2px); }
+    .mod-art { height: 150px; border: 1px solid #eee; background-color: #e8e8e8; }
+    .mod-art.orange { background-color: #e6e2df; }
+    .mod-art.blue { background-color: #e0e5e8; }
+    .mod-art.purple { background-color: #e6e2e8; }
+    .mod-art::before { border-color: #ffffff66; }
+    .mod-art svg { width: 92%; }
+    .badge { display: none; }
+    .mod-info { padding: 10px 0 15px; }
+    .mod-meta { color: #777; font-size: 10px; }
+    .mod-meta span:first-child { color: var(--accent); }
+    .mod-info h3 { margin: 8px 0 6px; color: #222; font-size: 16px; font-weight: 600; }
+    .mod-info p { min-height: 0; color: #666; font-size: 12px; }
+    .card-bottom { display: none; }
+    .card-bottom { margin-top: 10px; padding-top: 8px; }
+    .version { color: #777; }
+    .text-link { color: var(--accent); }
+    .projects { background: #fff; }
+    .project-grid { display: block; border-top: 1px solid #e8e8e8; }
+    .project-feature, .project-side { min-height: 0; position: relative; margin: 0; padding: 20px 10px 20px 175px; border: 0; border-bottom: 1px solid #e8e8e8; border-radius: 0; background: #fff; }
+    .project-feature::before, .project-side::before { content: "K"; position: absolute; top: 20px; left: 0; width: 150px; height: 106px; display: grid; place-items: center; background: linear-gradient(145deg,#344955,#18242b); color: #fff; font-size: 48px; font-weight: 700; }
+    .project-side::before { background: linear-gradient(145deg,#6e7777,#303a3b); }
+    .project-feature::after, .project-side::after { display: none; }
+    .project-content { max-width: none; }
+    .project-content .eyebrow { color: #777; font-size: 10px; letter-spacing: .04em; }
+    .project-content h3 { margin: 7px 0; color: #252525; font-size: 21px; font-weight: 600; letter-spacing: -.02em; }
+    .project-content p { max-width: 700px; margin: 0; color: #666; font-size: 13px; line-height: 1.7; }
+    .progress, .progress-label, .project-content .text-link { display: none; }
+    section#guias, .community { display: none; }
+    .footer { border-top: 1px solid #e5e5e5; background: #f6f6f6; color: #555; }
+    .footer-main { padding: 24px 0 16px; }
+    .footer-brand .brand { font-size: 18px; }
+    .footer-brand p { color: #666; font-size: 11px; }
+    .footer-links { gap: 15px; color: #555; }
+    .copyright { border-top-color: #e1e1e1; color: #777; font-size: 10px; }
+    .hero .showcase { opacity: 1; }
+    .hero .showcase-card { display: none; }
+    .mod-grid { display: none; }
+    .home-published-photos { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .home-published-photos .published-photo { border-color: #e7e7e7; background: #fff; }
+    .home-published-photos .published-photo img { aspect-ratio: 4/3; }
+    .home-published-photos .published-photo-caption { padding: 10px 0 15px; }
+    .home-published-photos .published-photo h2 { font-size: 13px; }
+    .home-published-photos .published-photo p { margin: 0 0 6px; font-size: 10px; }
+    .home-published-photos .published-photo time { font-size: 10px; }
+    @media (max-width: 700px) {
+      .hero-grid { min-height: 380px; }
+      .hero-copy { padding: 110px 0 90px; }
+      .hero-copy > p { font-size: 16px; }
+      .home-published-photos { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px 14px; }
+      .mod-art { height: 130px; }
+      .mod-info h3 { font-size: 14px; }
+      .footer-main { flex-direction: column; }
+      .copyright { flex-direction: column; }
+    }
+    @media (max-width: 390px) {
+      .wrap { width: calc(100% - 30px); }
+      .mod-art { height: 110px; }
+      .mod-info p { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Navegación principal">
+      <a class="brand" href="#inicio" aria-label="KryvexMods, inicio">
+        <span class="brand-mark">K</span><span>KryvexMods</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="mods.html">Mods</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="ultimos-trabajos.html">Últimos trabajos</a>
+        <a href="https://discord.gg/4bb9VqagPY" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a href="https://digitalshelf.shop/@kryvexmods" target="_blank" rel="noopener noreferrer">Tienda premium</a>
+      </div>
+      <a class="button nav-cta" href="#catalogo">Explorar mods <span aria-hidden="true">↗</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="status"><i></i> Creado para la comunidad</div>
+          <p class="eyebrow" style="margin:22px 0 0">KRYVEXMODS · GTA V</p>
+          <h1>Mods de emergencias<br>para GTA V</h1>
+          <p>En KryvexMods nos dedicamos a crear mods de vehículos y contenido para GTA V.</p>
+          <div class="hero-actions">
+            <a class="button" href="#proyectos">Más información</a>
+            <a class="button button-outline" href="#catalogo">Ver los proyectos</a>
+          </div>
+          <div class="hero-note">
+            <div class="avatar-stack" aria-hidden="true"><span>K</span><span>M</span><span>+</span></div>
+            Un espacio hecho por y para jugadores
+          </div>
+        </div>
+        <div class="showcase" aria-label="Vehículo de emergencia destacado">
+          <div class="showcase-card">
+            <div class="showcase-label">KRYVEX GARAGE <b>UNIT 04 / RESPONSE</b></div>
+            <div class="art-grid"></div>
+            <svg class="vehicle" viewBox="0 0 680 280" role="img" aria-label="Ilustración de un todoterreno de emergencias">
+              <defs>
+                <linearGradient id="carbody" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f0f1e8"/><stop offset=".48" stop-color="#c5cabb"/><stop offset="1" stop-color="#777e74"/></linearGradient>
+                <linearGradient id="glass" x1="0" x2="1"><stop stop-color="#33434a"/><stop offset="1" stop-color="#10181d"/></linearGradient>
+              </defs>
+              <ellipse cx="338" cy="230" rx="277" ry="25" fill="#060809" opacity=".8"/>
+              <path d="M92 184 112 131q8-17 31-23l117-17 60-47q12-9 31-9h102q19 0 33 16l46 55 75 20q24 7 28 27l8 40-20 19H79l-6-18q1-9 19-10Z" fill="url(#carbody)" stroke="#eff4e8" stroke-opacity=".42" stroke-width="3"/>
+              <path d="m271 96 53-43q7-6 20-6h49v52Zm132-49h20q11 0 19 10l34 42H403Z" fill="url(#glass)" stroke="#919b94" stroke-width="3"/>
+              <path d="M112 130h428l26 8 6 35H99Z" fill="#b5bdaf"/>
+              <path d="M110 160h454l9 23H102Z" fill="#202c28"/>
+              <path d="M118 165h225v14H113Z" fill="#c9fb55"/>
+              <path d="M357 165h130v14H357Z" fill="#d64e3c"/>
+              <path d="M208 109v48m188-63v63m100-50v50" stroke="#66716a" stroke-width="3"/>
+              <rect x="280" y="24" width="104" height="13" rx="5" fill="#242c2a"/>
+              <rect x="293" y="18" width="23" height="8" rx="3" fill="#ff6854"/>
+              <rect x="319" y="18" width="23" height="8" rx="3" fill="#e9f1dc"/>
+              <rect x="345" y="18" width="23" height="8" rx="3" fill="#668fff"/>
+              <path d="M88 173 68 180v17l26 2m475-27 21 3 6 20-24 4" fill="#e8e9dc" stroke="#777e74" stroke-width="3"/>
+              <path d="m83 168 22-4v18H78Zm506-2 23 3 5 17h-28Z" fill="#f3f5e5"/>
+              <circle cx="190" cy="204" r="44" fill="#111416"/><circle cx="190" cy="204" r="24" fill="#8b928a"/><circle cx="190" cy="204" r="10" fill="#272d2a"/>
+              <circle cx="494" cy="204" r="44" fill="#111416"/><circle cx="494" cy="204" r="24" fill="#8b928a"/><circle cx="494" cy="204" r="10" fill="#272d2a"/>
+              <text x="390" y="158" fill="#f2f4e9" font-size="13" font-weight="800" letter-spacing="3">KRYVEX</text>
+            </svg>
+            <div class="showcase-bottom"><div><small>DESTACADO</small><strong>Patrulla urbana 4×4</strong></div><span class="live-tag">EN DESARROLLO</span></div>
+          </div>
+          <div class="floating-chip">Diseñado con detalle <b>✦</b></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="wrap stats-grid">
+        <div class="stat"><strong>100%</strong><span>Pasión por el detalle</span></div>
+        <div class="stat"><strong>GTA V</strong><span>Un universo de posibilidades</span></div>
+        <div class="stat"><strong>En marcha</strong><span>Nuevos proyectos en camino</span></div>
+        <div class="stat"><strong>Comunidad</strong><span>Creado para compartir</span></div>
+      </div>
+    </div>
+
+    <section class="section catalog" id="catalogo">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">Colección Kryvex</div><h2>Últimos trabajos</h2></div>
+          <p>Publica tus propias fotos desde el <a href="admin.html">panel creador</a>.</p>
+        </div>
+        <div class="published-photos home-published-photos" data-latest-photos aria-live="polite">
+          <p class="content-message">Carga tus propias fotos desde el panel creador.</p>
+        </div>
+        <div class="catalog-tools">
+          <div class="filters" role="group" aria-label="Filtrar mods">
+            <button class="filter active" data-filter="todos" aria-pressed="true">Todos</button>
+            <button class="filter" data-filter="emergencias" aria-pressed="false">Emergencias</button>
+            <button class="filter" data-filter="vehiculos" aria-pressed="false">Vehículos</button>
+            <button class="filter" data-filter="recursos" aria-pressed="false">Recursos</button>
+          </div>
+          <label class="search"><span aria-hidden="true">⌕</span><input id="mod-search" type="search" placeholder="Buscar en el catálogo…" aria-label="Buscar en el catálogo"></label>
+        </div>
+        <div class="mod-grid" id="mod-grid">
+          <article class="mod-card" data-category="emergencias" data-name="unidad de respuesta suv patrulla">
+            <div class="mod-art"><span class="badge">En desarrollo</span>
+              <svg viewBox="0 0 400 160" aria-hidden="true"><path d="M43 109 59 66q5-10 20-13l77-10 44-27q6-4 18-4h54q14 0 21 11l29 34 37 10q16 4 18 17l4 25-16 12H39l-2-10q0-9 6-12Z" fill="#d0d5c7"/><path d="m164 44 38-23h51l14 23Zm105-23h7q8 0 13 8l17 15h-37Z" fill="#26353b"/><path d="M45 92h310v17H42Z" fill="#242e29"/><path d="M51 94h130v11H47Z" fill="#c9fb55"/><path d="M192 94h75v11h-75Z" fill="#dd5949"/><rect x="180" y="6" width="58" height="8" rx="3" fill="#242a27"/><circle cx="99" cy="123" r="23" fill="#111"/><circle cx="99" cy="123" r="12" fill="#a2a89d"/><circle cx="308" cy="123" r="23" fill="#111"/><circle cx="308" cy="123" r="12" fill="#a2a89d"/></svg>
+            </div><div class="mod-info"><div class="mod-meta"><span>Emergencias</span><span>GTA V</span></div><h3>Unidad de respuesta SUV</h3><p>Un todoterreno de intervención con acabados y detalles de servicio.</p><div class="card-bottom"><span class="version">Kryvex Garage · WIP</span><button class="text-link" data-details="Unidad de respuesta SUV|Un concepto original de vehículo de intervención todoterreno. El proyecto está en desarrollo; próximamente publicaremos novedades y detalles de compatibilidad.">Ver ficha ↗</button></div></div>
+          </article>
+          <article class="mod-card" data-category="emergencias" data-name="ambulancia urbana servicio medico">
+            <div class="mod-art orange"><span class="badge">Concepto</span>
+              <svg viewBox="0 0 400 160" aria-hidden="true"><path d="M37 67q0-11 13-11h213q12 0 19 9l42 48h29q11 0 13 10l5 13H35Z" fill="#e9e9df"/><path d="M274 64h-69v43h104Z" fill="#303e43"/><path d="M45 118h315v14H40Z" fill="#d8d8ca"/><path d="M94 79h42v40H94Z" fill="#d64d42"/><path d="M110 85v28m-14-14h28" stroke="#f8f6ec" stroke-width="7"/><path d="M158 88h50v8h-50Zm0 15h50v8h-50Z" fill="#d64d42"/><rect x="132" y="49" width="70" height="7" rx="3" fill="#333"/><rect x="138" y="44" width="18" height="6" rx="2" fill="#fc6552"/><rect x="160" y="44" width="18" height="6" rx="2" fill="#eee"/><rect x="182" y="44" width="18" height="6" rx="2" fill="#6589fc"/><circle cx="99" cy="132" r="20" fill="#111"/><circle cx="99" cy="132" r="10" fill="#9ea39a"/><circle cx="317" cy="132" r="20" fill="#111"/><circle cx="317" cy="132" r="10" fill="#9ea39a"/></svg>
+            </div><div class="mod-info"><div class="mod-meta"><span>Emergencias</span><span>GTA V</span></div><h3>Ambulancia urbana</h3><p>Diseño de asistencia médica para completar tu flota de emergencias.</p><div class="card-bottom"><span class="version">Kryvex Garage · WIP</span><button class="text-link" data-details="Ambulancia urbana|Un diseño de ambulancia para completar una flota de emergencias. Esta ficha es una vista previa del proyecto; el contenido todavía no está disponible para descargar.">Ver ficha ↗</button></div></div>
+          </article>
+          <article class="mod-card" data-category="vehiculos" data-name="deportivo nocturno tuning">
+            <div class="mod-art blue"><span class="badge">Próximamente</span>
+              <svg viewBox="0 0 400 160" aria-hidden="true"><path d="m34 108 31-10 43-42q10-10 27-12l98-7q21-1 35 13l38 39 48 10q12 3 14 13l3 15H31l-4-10q-2-7 7-9Z" fill="#4a80a8"/><path d="m121 58 26-9 78-6q15-1 25 9l31 33H91Z" fill="#1b2b35"/><path d="M44 106h325l4 16H35Z" fill="#273842"/><path d="M52 107h48l-8 9H43Zm280 0h27l6 9h-36Z" fill="#d9edfb"/><path d="M122 91h157" stroke="#73b9ed" stroke-width="4"/><circle cx="99" cy="129" r="22" fill="#101315"/><circle cx="99" cy="129" r="11" fill="#98a5aa"/><circle cx="315" cy="129" r="22" fill="#101315"/><circle cx="315" cy="129" r="11" fill="#98a5aa"/></svg>
+            </div><div class="mod-info"><div class="mod-meta"><span>Vehículos</span><span>GTA V</span></div><h3>Deportivo nocturno</h3><p>Una silueta deportiva y limpia para recorrer la ciudad a tu estilo.</p><div class="card-bottom"><span class="version">Kryvex Garage · Idea</span><button class="text-link" data-details="Deportivo nocturno|Una propuesta de coche deportivo con una silueta propia y un estilo pensado para la ciudad. El proyecto se encuentra en fase de concepto.">Ver ficha ↗</button></div></div>
+          </article>
+          <article class="mod-card" data-category="emergencias" data-name="unidad forestal bomberos rescate">
+            <div class="mod-art orange"><span class="badge">En desarrollo</span>
+              <svg viewBox="0 0 400 160" aria-hidden="true"><path d="M42 59q0-11 13-11h207q11 0 19 10l39 42h35q9 0 12 11l4 23H37Z" fill="#d56d4a"/><path d="M275 62h-63v39h98Z" fill="#28383c"/><path d="M43 117h321v16H38Z" fill="#9e4936"/><path d="M55 108h307v8H55Z" fill="#f1ca6f"/><path d="M119 68h97v31h-97Z" fill="#bb593e"/><path d="M135 76h64v5h-64Zm0 11h64v5h-64Z" fill="#eab48e"/><path d="M139 46v-9h74v9" fill="#c6c7bd"/><rect x="145" y="33" width="63" height="6" rx="2" fill="#383d39"/><circle cx="99" cy="133" r="20" fill="#111"/><circle cx="99" cy="133" r="10" fill="#9e9c91"/><circle cx="319" cy="133" r="20" fill="#111"/><circle cx="319" cy="133" r="10" fill="#9e9c91"/></svg>
+            </div><div class="mod-info"><div class="mod-meta"><span>Emergencias</span><span>GTA V</span></div><h3>Unidad forestal de rescate</h3><p>Un vehículo de apoyo pensado para operaciones fuera del asfalto.</p><div class="card-bottom"><span class="version">Kryvex Garage · WIP</span><button class="text-link" data-details="Unidad forestal de rescate|Una unidad de apoyo para misiones de rescate y recorridos todoterreno. Compartiremos avances a medida que evolucione el proyecto.">Ver ficha ↗</button></div></div>
+          </article>
+          <article class="mod-card" data-category="vehiculos" data-name="sedan clasico ciudad">
+            <div class="mod-art purple"><span class="badge">Concepto</span>
+              <svg viewBox="0 0 400 160" aria-hidden="true"><path d="m39 106 21-9 38-38q12-12 30-13l105-4q21-1 34 12l41 40 44 8q14 3 17 13l2 15H32l-2-12q0-8 9-12Z" fill="#9b78c7"/><path d="m111 60 24-9 93-4q15-1 25 9l34 34H78Z" fill="#262b37"/><path d="M42 106h321l3 17H34Z" fill="#4f4264"/><path d="M47 107h48l-5 8H39Zm283 0h31l5 8h-40Z" fill="#eee4cd"/><path d="M162 51v39m96-38v38" stroke="#6b5b80" stroke-width="3"/><circle cx="98" cy="130" r="22" fill="#111"/><circle cx="98" cy="130" r="11" fill="#aaa0b5"/><circle cx="317" cy="130" r="22" fill="#111"/><circle cx="317" cy="130" r="11" fill="#aaa0b5"/></svg>
+            </div><div class="mod-info"><div class="mod-meta"><span>Vehículos</span><span>GTA V</span></div><h3>Sedán clásico de ciudad</h3><p>Una interpretación elegante para dar variedad al tráfico urbano.</p><div class="card-bottom"><span class="version">Kryvex Garage · Idea</span><button class="text-link" data-details="Sedán clásico de ciudad|Una idea para ampliar la variedad de vehículos de la ciudad con un sedán de inspiración clásica.">Ver ficha ↗</button></div></div>
+          </article>
+          <article class="mod-card" data-category="recursos" data-name="pack identidad visual recursos">
+            <div class="mod-art blue"><span class="badge">En preparación</span>
+              <svg viewBox="0 0 400 160" aria-hidden="true"><path d="M119 39q0-9 10-9h140q10 0 10 9v99H119Z" fill="#353c43"/><path d="M133 47h132v80H133Z" fill="#1b2027"/><path d="m199 59 33 13v24q0 23-33 38-33-15-33-38V72Z" fill="#c9fb55"/><path d="m184 94 10 10 21-23" fill="none" stroke="#20281a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M142 136h116" stroke="#777f84" stroke-width="4" stroke-linecap="round"/><circle cx="106" cy="55" r="5" fill="#ff8057"/><circle cx="294" cy="104" r="7" fill="#729aff"/><circle cx="120" cy="121" r="4" fill="#c9fb55"/></svg>
+            </div><div class="mod-info"><div class="mod-meta"><span>Recursos</span><span>Comunidad</span></div><h3>Pack de identidad visual</h3><p>Recursos gráficos para personalizar proyectos y sesiones de juego.</p><div class="card-bottom"><span class="version">Kryvex Studio · Idea</span><button class="text-link" data-details="Pack de identidad visual|Estamos preparando recursos gráficos originales para acompañar proyectos de la comunidad. Próximamente compartiremos más información.">Ver ficha ↗</button></div></div>
+          </article>
+          <div class="empty-state" id="empty-state">No hay resultados para esa búsqueda. Prueba con otro término.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section projects" id="proyectos">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">En el taller</div><h2>Proyectos en curso</h2></div>
+          <p>Cada proyecto empieza con una idea. Aquí puedes seguir lo que estamos creando.</p>
+        </div>
+        <div class="project-grid">
+          <article class="project-feature"><div class="project-content"><div class="eyebrow">KryvexMods · 8 de noviembre de 2026</div><h3>Nueva unidad de respuesta urbana</h3><p>Estamos preparando un vehículo de intervención para recorrer la ciudad. Compartiremos imágenes y detalles del proyecto en cuanto estén listos.</p><div class="progress"><i></i></div><div class="progress-label"><span>Proyecto en desarrollo</span><span>68%</span></div></div></article>
+          <article class="project-side"><div class="project-content"><div class="eyebrow side-label">KryvexMods · Próximamente</div><h3>Proyecto de flota médica</h3><p>Una nueva propuesta de vehículos de asistencia para ampliar los proyectos de KryvexMods.</p><a class="text-link" href="#catalogo">Ver colección ↗</a></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guias">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><div class="eyebrow">Punto de partida</div><h2>Guías para empezar</h2></div>
+          <p>Información útil para preparar tus mods y disfrutar de una experiencia más estable.</p>
+        </div>
+        <div class="guides-grid">
+          <article class="guide"><div class="guide-icon">↗</div><div><h3>Instalación básica de mods</h3><p>Conoce los pasos generales para preparar tu instalación de GTA V.</p><span>GUÍA · 5 MIN</span></div></article>
+          <article class="guide"><div class="guide-icon">▣</div><div><h3>Organiza tus archivos</h3><p>Buenas prácticas para mantener ordenados tus recursos y copias.</p><span>CONSEJOS · 3 MIN</span></div></article>
+          <article class="guide"><div class="guide-icon">⌘</div><div><h3>Compatibilidad y versiones</h3><p>Qué revisar antes de añadir contenido nuevo a tu juego.</p><span>GUÍA · 4 MIN</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="community" id="comunidad">
+      <div class="wrap community-box">
+        <div><div class="eyebrow">La comunidad lo hace mejor</div><h2>¿Tienes una idea para el taller?</h2><p>KryvexMods es un proyecto en crecimiento. Vuelve pronto para descubrir novedades, avances y nuevos recursos.</p></div>
+        <a class="button" href="#catalogo">Descubrir el proyecto <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-main">
+      <div class="footer-brand"><a class="brand" href="#inicio"><span class="brand-mark">K</span><span>KryvexMods</span></a><p>Mods de vehículos y proyectos para GTA V.</p></div>
+      <div class="footer-links"><a href="mods.html">Mods</a><a href="proyectos.html">Proyectos</a><a href="ultimos-trabajos.html">Últimos trabajos</a><a href="admin.html">Panel creador</a><a href="https://discord.gg/4bb9VqagPY" target="_blank" rel="noopener noreferrer">Discord</a><a href="https://digitalshelf.shop/@kryvexmods" target="_blank" rel="noopener noreferrer">Tienda premium</a></div>
+    </div>
+    <div class="wrap copyright"><span>© 2026 KryvexMods. Proyecto independiente de fans.</span><span>Grand Theft Auto V es propiedad de sus respectivos titulares.</span></div>
+  </footer>
+
+  <dialog id="mod-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-inner">
+      <div class="eyebrow">Ficha del proyecto</div>
+      <h2 id="dialog-title"></h2>
+      <p id="dialog-description"></p>
+      <div class="dialog-actions"><button class="dialog-close" id="dialog-close">Cerrar</button><span class="live-tag">EN DESARROLLO</span></div>
+    </div>
+  </dialog>
+
+  <script type="module" src="public-content.js"></script>
+  <script>
+    const filterButtons = document.querySelectorAll(".filter");
+    const cards = [...document.querySelectorAll(".mod-card")];
+    const searchInput = document.querySelector("#mod-search");
+    const emptyState = document.querySelector("#empty-state");
+    let activeFilter = "todos";
+
+    function updateCatalog() {
+      const query = searchInput.value.trim().toLocaleLowerCase("es");
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchesFilter = activeFilter === "todos" || card.dataset.category === activeFilter;
+        const matchesSearch = card.dataset.name.includes(query) || card.textContent.toLocaleLowerCase("es").includes(query);
+        const show = matchesFilter && matchesSearch;
+        card.hidden = !show;
+        if (show) visible += 1;
+      });
+      emptyState.style.display = visible ? "none" : "block";
+    }
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        filterButtons.forEach((item) => {
+          const selected = item === button;
+          item.classList.toggle("active", selected);
+          item.setAttribute("aria-pressed", String(selected));
+        });
+        updateCatalog();
+      });
+    });
+    searchInput.addEventListener("input", updateCatalog);
+
+    const dialog = document.querySelector("#mod-dialog");
+    document.querySelectorAll("[data-details]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const [title, description] = button.dataset.details.split("|");
+        document.querySelector("#dialog-title").textContent = title;
+        document.querySelector("#dialog-description").textContent = description;
+        dialog.showModal();
+      });
+    });
+    document.querySelector("#dialog-close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    const menuToggle = document.querySelector("#menu-toggle");
+    const navLinks = document.querySelector("#nav-links");
+    menuToggle.addEventListener("click", () => {
+      const open = menuToggle.getAttribute("aria-expanded") !== "true";
+      menuToggle.setAttribute("aria-expanded", String(open));
+      menuToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+      navLinks.classList.toggle("open", open);
+    });
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Abrir menú");
+      });
+    });
+  </script>
+</body>
+</html>

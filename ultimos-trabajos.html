@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Consulta los últimos trabajos y novedades de KryvexMods.">
+  <title>Últimos trabajos — KryvexMods</title>
+  <link rel="stylesheet" href="pages.css">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav wrap" aria-label="Navegación principal">
+      <a class="brand" href="index.html"><span class="brand-mark">K</span><span>KryvexMods</span></a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-links">Menú ☰</button>
+      <div class="menu-links" id="menu-links">
+        <a href="index.html">Inicio</a><a href="mods.html">Mods</a><a href="proyectos.html">Proyectos</a><a href="ultimos-trabajos.html" aria-current="page">Últimos trabajos</a><a href="https://discord.gg/4bb9VqagPY" target="_blank" rel="noopener noreferrer">Discord</a><a href="https://digitalshelf.shop/@kryvexmods" target="_blank" rel="noopener noreferrer">Tienda premium</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section class="page-banner"><div><h1>Últimos trabajos</h1><p>Novedades, avances y publicaciones recientes de KryvexMods.</p></div></section>
+    <section class="content wrap">
+      <h2>Noticias y avances</h2>
+      <div class="project-list">
+        <article class="project-entry text-only"><div><time datetime="2026-11-08">8 de noviembre de 2026</time><h2>Comienza el proyecto KryvexMods</h2><p>Estrenamos este espacio para compartir nuestros proyectos de vehículos, mods y recursos para GTA V. Pronto publicaremos más avances.</p></div></article>
+        <article class="project-entry text-only"><div><time>En desarrollo</time><h2>Primeros detalles de la unidad SUV</h2><p>La unidad de respuesta urbana sigue en desarrollo. Estamos trabajando en su concepto y en los detalles del diseño.</p></div></article>
+        <article class="project-entry text-only"><div><time>Próximamente</time><h2>Nuevos proyectos en preparación</h2><p>También estamos preparando ideas para vehículos de asistencia y recursos gráficos. Iremos compartiendo novedades en esta sección.</p></div></article>
+      </div>
+      <section class="free-mods">
+        <h2>Fotos añadidas por ti</h2>
+        <p class="gallery-help">Sube tus propias imágenes desde el <a href="admin.html">panel creador</a>.</p>
+        <div class="published-photos" data-latest-photos aria-live="polite"><p class="content-message">Cargando fotografías…</p></div>
+      </section>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap footer-row"><span>© 2026 KryvexMods · Proyecto independiente de fans.</span><div class="footer-links"><a href="index.html">Inicio</a><a href="mods.html">Mods</a><a href="proyectos.html">Proyectos</a><a href="admin.html">Panel creador</a><a href="https://discord.gg/4bb9VqagPY" target="_blank" rel="noopener noreferrer">Discord</a><a href="https://digitalshelf.shop/@kryvexmods" target="_blank" rel="noopener noreferrer">Tienda premium</a></div></div></footer>
+  <script>
+    const menuButton = document.querySelector("#menu-toggle");
+    const menu = document.querySelector("#menu-links");
+    menuButton.addEventListener("click", () => {
+      const open = menuButton.getAttribute("aria-expanded") !== "true";
+      menuButton.setAttribute("aria-expanded", String(open));
+      menuButton.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+      menu.classList.toggle("open", open);
+    });
+  </script>
+  <script type="module" src="public-content.js"></script>
+</body>
+</html>
